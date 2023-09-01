@@ -2,6 +2,10 @@ from rest_framework import generics,status
 from rest_framework.response import Response
 from .models import UserProfile
 from .serializers import UserProfileSerializer
+from .models import WorkoutPlan
+from .serializers import WorkoutPlanSerializer
+from .models import NutritionPlan
+from .serializers import NutritionPlanSerializer
 
 ## for user
 class UserProfileCreateView(generics.CreateAPIView):
@@ -46,3 +50,30 @@ class TrainerLoginView(generics.CreateAPIView):
 
         serializer = self.get_serializer(user_profile)
         return Response(serializer.data)
+    
+##  workout plans
+class WorkoutPlanCreateView(generics.CreateAPIView):
+    queryset = WorkoutPlan.objects.all()
+    serializer_class = WorkoutPlanSerializer
+
+class WorkoutPlanListView(generics.ListAPIView):
+    queryset = WorkoutPlan.objects.all()
+    serializer_class = WorkoutPlanSerializer
+
+class WorkoutPlanDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = WorkoutPlan.objects.all()
+    serializer_class = WorkoutPlanSerializer
+
+## Nutrition plans
+
+class NutritionPlanCreateView(generics.CreateAPIView):
+    queryset = NutritionPlan.objects.all()
+    serializer_class = NutritionPlanSerializer
+
+class NutritionPlanListView(generics.ListAPIView):
+    queryset = NutritionPlan.objects.all()
+    serializer_class = NutritionPlanSerializer
+
+class NutritionPlanDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = NutritionPlan.objects.all()
+    serializer_class = NutritionPlanSerializer
