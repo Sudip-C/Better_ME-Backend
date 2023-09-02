@@ -24,3 +24,9 @@ class NutritionPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = NutritionPlan
         fields = '__all__'
+
+class SelectWorkoutPlanSerializer(serializers.Serializer):
+    workout_plan_id = serializers.IntegerField(required=True)
+
+class SelectNutritionPlanSerializer(serializers.Serializer):
+    nutrition_plan_id = serializers.IntegerField(required=True)

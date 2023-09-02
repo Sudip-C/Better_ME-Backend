@@ -1,4 +1,5 @@
 from rest_framework import generics,status
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import UserProfile
 from .serializers import UserProfileSerializer
@@ -6,6 +7,8 @@ from .models import WorkoutPlan
 from .serializers import WorkoutPlanSerializer
 from .models import NutritionPlan
 from .serializers import NutritionPlanSerializer
+# from rest_framework.generics import UpdateAPIView
+# from .serializers import SelectWorkoutPlanSerializer
 
 ## for user
 class UserProfileCreateView(generics.CreateAPIView):
@@ -77,3 +80,54 @@ class NutritionPlanListView(generics.ListAPIView):
 class NutritionPlanDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = NutritionPlan.objects.all()
     serializer_class = NutritionPlanSerializer
+
+
+
+
+class SelectWorkoutPlanView(APIView):
+    def patch(self, request, pk):
+        try:
+            # Get the user and workout plan instances based on their IDs
+            user = UserProfile.objects.get(pk=pk)
+            workout_plan_id = request.data.get('workout_plan_id')
+            workout_plan = WorkoutPlan.objects.get(pk=workout_plan_id)
+
+            # Assign the workout plan instance to the user's profile
+            user.workout_plan_id = workout_plan
+            user.save()
+
+            return Response({'message': 'Workout plan updated successfully.'}, status=status.HTTP_200_OK)
+        
+        except UserProfile.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        except WorkoutPlan.DoesNotExist:
+            return Response({'error': 'Workout plan not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# from .serializers import SelectNutritionPlanSerializer
+
+class SelectNutritionPlanView(APIView):
+    def patch(self, request, pk):
+        try:
+            # Get the user and nutrition plan instances based on their IDs
+            user = UserProfile.objects.get(pk=pk)
+            nutrition_plan_id = request.data.get('nutrition_plan_id')
+            nutrition_plan = NutritionPlan.objects.get(pk=nutrition_plan_id)
+
+            # Assign the nutrition plan instance to the user's profile
+            user.nutrition_plan_id = nutrition_plan
+            user.save()
+
+            return Response({'message': 'Nutrition plan updated successfully.'}, status=status.HTTP_200_OK)
+        
+        except UserProfile.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        except NutritionPlan.DoesNotExist:
+            return Response({'error': 'Nutrition plan not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

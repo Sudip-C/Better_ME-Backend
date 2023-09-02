@@ -14,7 +14,9 @@ class UserProfile(models.Model):
     weight = models.PositiveIntegerField()
     email = models.EmailField(unique=True)
     contact_number = models.CharField(max_length=20)
-    password = models.CharField(max_length=100)  
+    password = models.CharField(max_length=100) 
+    workout_plan_id = models.ForeignKey('WorkoutPlan', on_delete=models.SET_NULL, null=True, blank=True)
+    nutrition_plan_id = models.ForeignKey('NutritionPlan', on_delete=models.SET_NULL, null=True, blank=True)
 
 ## for trainer
 class FitnessProfile(models.Model):
