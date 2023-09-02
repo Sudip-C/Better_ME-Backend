@@ -131,3 +131,61 @@ class SelectNutritionPlanView(APIView):
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+## get paln by id
+
+class GetWorkoutPlanView(APIView):
+    def get(self, request, workout_plan_id):
+        try:
+            # Retrieve the workout plan instance based on its ID
+            workout_plan = WorkoutPlan.objects.get(pk=workout_plan_id)
+
+            # Serialize the workout plan data using a serializer
+            serializer = WorkoutPlanSerializer(workout_plan)
+
+            # Return the serialized data as a JSON response
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except WorkoutPlan.DoesNotExist:
+            return Response({'error': 'Workout plan not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class GetNutritionPlanView(APIView):
+    def get(self, request, nutrition_plan_id):
+        try:
+            # Retrieve the nutrition plan instance based on its ID
+            nutrition_plan = NutritionPlan.objects.get(pk=nutrition_plan_id)
+
+            # Serialize the nutrition plan data using a serializer
+            serializer = NutritionPlanSerializer(nutrition_plan)
+
+            # Return the serialized data as a JSON response
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except NutritionPlan.DoesNotExist:
+            return Response({'error': 'Nutrition plan not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+## get sigle user details
+
+class GetUserByIdView(APIView):
+    def get(self, request, user_id):
+        try:
+            # Retrieve the user instance based on their ID
+            user = UserProfile.objects.get(pk=user_id)
+
+            # Serialize the user data using a serializer
+            serializer = UserProfileSerializer(user)
+
+            # Return the serialized data as a JSON response
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except UserProfile.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
