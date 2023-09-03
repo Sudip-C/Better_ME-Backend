@@ -9,6 +9,11 @@ from .models import NutritionPlan
 from .serializers import NutritionPlanSerializer
 # from rest_framework.generics import UpdateAPIView
 # from .serializers import SelectWorkoutPlanSerializer
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Welcome!")
+
 
 ## for user
 class UserProfileCreateView(generics.CreateAPIView):

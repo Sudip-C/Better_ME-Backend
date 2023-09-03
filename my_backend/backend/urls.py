@@ -1,8 +1,9 @@
 from django.urls import path
 from .views import GetUserByIdView,UserProfileCreateView,UserLoginView,FitnessTrainerProfileCreateView,TrainerLoginView,WorkoutPlanCreateView, WorkoutPlanListView, WorkoutPlanDetailView,NutritionPlanCreateView, NutritionPlanListView, NutritionPlanDetailView,SelectWorkoutPlanView, SelectNutritionPlanView,GetWorkoutPlanView
-
+from . import views
 
 urlpatterns = [
+    path('',views.home,name="Home"),
     path('user-signup/', UserProfileCreateView.as_view(), name='user-signup'),
     path('user-login/', UserLoginView.as_view(), name='user-login'),
     path('trainer-signup/', FitnessTrainerProfileCreateView.as_view(), name='trainer-signup'),
